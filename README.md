@@ -63,7 +63,7 @@ function MyComponent() {
 function MyComponent() {
   return (
     <div>
-      <div className={style.my-component__element}>
+      <div className={style.myComponent__element}>
         
       </div>
     </div>
@@ -80,7 +80,7 @@ function MyComponent() {
 <button>Click me</button> // <- курсор внутри тега
 
 // После
-<button className={style.my-component__element}>Click me</button>
+<button className={style.myComponent__element}>Click me</button>
 ```
 
 #### 3. Автоматический импорт CSS модуля
@@ -98,7 +98,7 @@ import style from './MyComponent.module.scss';
 
 function MyComponent() {
   return (
-    <div className={style.my-component__element}>
+    <div className={style.myComponent__element}>
       Content
     </div>
   );
@@ -113,7 +113,7 @@ function MyComponent() {
 
 1. **Из родительских элементов** - ищет существующие className с BEM-структурой
 2. **Из имени CSS модуля** - использует имя импортированного файла
-3. **Из имени компонента** - преобразует имя файла в kebab-case
+3. **Из имени компонента** - преобразует имя файла в camelCase
 
 ### Поддерживаемые форматы CSS модулей
 
@@ -126,7 +126,7 @@ function MyComponent() {
 После вставки вы можете использовать Tab для навигации между полями:
 
 1. **Объект стилей** (например, `style`)
-2. **Название блока** (например, `my-component`)
+2. **Название блока** (например, `myComponent`)
 3. **Тег элемента** (например, `div`) - только при создании нового элемента
 4. **Название элемента** (например, `button`, `title`, `content`)
 

@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { parse } from '@babel/parser';
 import traverse from '@babel/traverse';
 import * as t from '@babel/types';
-import { paramCase } from 'param-case';
 
 const CSS_MODULE_RE = /\.module\.(s?css|sass)$/i;
 
@@ -56,9 +55,19 @@ function guessComponentNameFromFileName(doc: vscode.TextDocument): string {
   return base.replace(/\.[^.]+$/, '');
 }
 
-/** Приводим значение имени модуля в kebab-case */
-function toKebab(name: string): string {
-  return paramCase(name);
+/** Приводим значение имени модуля в camelCase */
+function toCamelCase(name: string): string {
+  return name
+    // Разбиваем по границам слов (заглавные буквы, дефисы, подчеркивания)
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .split(/[\s\-_]+/)
+    .map((word, index) => {
+      if (index === 0) {
+        return word.toLowerCase();
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join('');
 }
 
 /** Найти JSX-элемент, внутри которого сейчас курсор */
@@ -221,7 +230,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // 4) Вычисляем block:
     //    а) из предков по className
-    //    б) иначе — из имени CSS-модуля (kebab-case имени компонента)
+    //    б) иначе — из имени CSS-модуля (camelCase имени компонента)
     let block: string | null = null;
     if (inner && objectNames.length) {
       block = findBlockFromAncestors(inner, objectNames);
@@ -230,7 +239,7 @@ export function activate(context: vscode.ExtensionContext) {
       const baseName = cssImport?.importPath
         ? (cssImport.importPath.split('/').pop() || 'Component.module.scss').replace(/\.module\.(s?css|sass)$/i, '')
         : guessComponentNameFromFileName(doc);
-      block = toKebab(baseName);
+      block = toCamelCase(baseName);
     }
 
     // 5) Если импорта нет — вставим вслепую import <obj> from './<Component>.module.scss'
