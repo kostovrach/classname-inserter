@@ -1,0 +1,103 @@
+{
+	"name": "classname-inserter",
+	"author": "Антон Мельников",
+    "publisher": "kostovrach",
+	"license": "MIT-license",
+	"displayName": "JSX/TSX ClassName Inserter",
+	"description": "Расширение для автоматической вставки BEM-style className с поддержкой CSS модулей в JSX/TSX проектах.",
+	"repository": "kostovrach/classname-inserter",
+	"version": "1.0.0",
+	"engines": {
+		"vscode": "^1.85.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"BEM",
+		"className",
+		"CSS module",
+		"react"
+	],
+	"activationEvents": [
+		"onCommand:bem.insertClassName"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "bem.insertClassName",
+				"title": "BEM: Insert className with CSS Module"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "bem.insertClassName",
+				"key": "ctrl+numpad_add",
+				"when": "editorTextFocus && !editorReadonly"
+			},
+			{
+				"command": "bem.insertClassName",
+				"key": "ctrl+shift+=",
+				"when": "editorTextFocus && !editorReadonly"
+			}
+		],
+		"languages": [
+			{
+				"id": "javascript",
+				"extensions": [
+					".js"
+				],
+				"aliases": [
+					"JavaScript"
+				]
+			},
+			{
+				"id": "typescript",
+				"extensions": [
+					".ts"
+				],
+				"aliases": [
+					"TypeScript"
+				]
+			},
+			{
+				"id": "javascriptreact",
+				"extensions": [
+					".jsx"
+				],
+				"aliases": [
+					"JavaScript React"
+				]
+			},
+			{
+				"id": "typescriptreact",
+				"extensions": [
+					".tsx"
+				],
+				"aliases": [
+					"TypeScript React"
+				]
+			}
+		]
+	},
+	"scripts": {
+		"compile": "tsc -p ./",
+		"watch": "tsc -w -p ./",
+        "package": "npx vsce package",
+		"vscode:prepublish": "npm run compile"
+	},
+	"devDependencies": {
+		"@types/babel__traverse": "^7.28.0",
+		"@types/node": "^20.11.30",
+		"@types/vscode": "^1.85.0",
+		"esbuild": "^0.20.2",
+		"typescript": "^5.4.0"
+	},
+	"dependencies": {
+		"@babel/parser": "^7.25.0",
+		"@babel/traverse": "^7.25.0",
+		"@babel/types": "^7.25.0",
+		"param-case": "3.0.4"
+	}
+}
